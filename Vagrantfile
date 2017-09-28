@@ -15,6 +15,11 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
     end
 
+    server.vm.provision "file", source: "splunk.pp", destination: "/tmp/splunk.pp"
+    server.vm.provision "file", source: "splunk-7.0.0-c8a78efdd40f-linux-2.6-x86_64.rpm", destination: "/tmp/splunk/linux/splunk-7.0.0-c8a78efdd40f-linux-2.6-x86_64.rpm"
     server.vm.provision "shell", inline: "puppet module install puppet-splunk"
+    server.vm.provision "shell", inline: "puppet apply /tmp/splunk.pp"
+    server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=8000/tcp"
+    server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=8089/tcp"
   end
 end
