@@ -17,3 +17,10 @@ class { '::splunk::params':
 
 include ::splunk::forwarder
 
+@splunkforwarder_input { 'messages':
+  section => 'monitor:///var/log/messages',
+  setting => 'sourcetype',
+  value   => 'puppetclient',
+  tag     => 'messages'
+}
+

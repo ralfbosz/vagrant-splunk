@@ -11,7 +11,6 @@ Vagrant.configure("2") do |config|
     server.vm.hostname = "splunkserver.local"
     server.vm.network :private_network, ip: "10.0.0.10"
     server.vm.network "forwarded_port", guest: 8000, host: 8000
-    server.vm.network "forwarded_port", guest: 8089, host: 8089
 
     server.vm.provider "virtualbox" do |vb|
       # Use VBoxManage to customize the VM. For example to change memory:
@@ -25,7 +24,7 @@ Vagrant.configure("2") do |config|
     server.vm.provision "shell", inline: "puppet module install puppet-splunk" 
     server.vm.provision "shell", inline: "puppet apply /tmp/splunk-server.pp"
     server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=8000/tcp"
-    server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=8089/tcp"
+    server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=9997/tcp"
   end
 
   config.vm.define "client" do |client|
