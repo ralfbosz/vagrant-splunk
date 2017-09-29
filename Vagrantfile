@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
     end
 
     server.vm.provision "file", source: "splunk-#{SPLUNK_VERSION}-#{SPLUNK_BUILD}-linux-2.6-x86_64.rpm", destination: "/tmp/splunk/linux/splunk-#{SPLUNK_VERSION}-#{SPLUNK_BUILD}-linux-2.6-x86_64.rpm"
-    server.vm.provision "shell", inline: "puppet module install puppet-splunk"
+    server.vm.provision "shell", inline: "puppet module install puppet-splunk --environment server"
     server.vm.provision "puppet" do |puppet|
       puppet.environment_path = "environments"
       puppet.environment = "server"
@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
     client.vm.hostname = "splunkclient.local"
     client.vm.network "private_network", ip: "192.168.50.20"
     client.vm.provision "file", source: "splunkforwarder-#{SPLUNK_VERSION}-#{SPLUNK_BUILD}-linux-2.6-x86_64.rpm", destination: "/tmp/universalforwarder/linux/splunkforwarder-#{SPLUNK_VERSION}-#{SPLUNK_BUILD}-linux-2.6-x86_64.rpm"
-    client.vm.provision "shell", inline: "puppet module install puppet-splunk"
+    client.vm.provision "shell", inline: "puppet module install puppet-splunk --environment client"
     client.vm.provision "puppet" do |puppet|
       puppet.environment_path = "environments"
       puppet.environment = "client"
