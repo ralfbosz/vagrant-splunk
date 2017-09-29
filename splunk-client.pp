@@ -1,11 +1,26 @@
-# simple Puppet file to install SplunkServer
-# simple Puppet file to install SplunkServer
+# simple Puppet file to install SplunkClient
+
+host { 'splunkserver.localdomain':
+  ensure       => 'present',
+  host_aliases => ['splunkserver'],
+  ip           => '10.0.0.10',
+  target       => '/etc/hosts',
+}
+
 class { '::splunk::params':
-  server   => ' master',
+  server   => 'splunkserver.localdomain',
   version  => '7.0.0',
   build    => 'c8a78efdd40f',
   src_root => '/tmp',
+  require  => Host['splunkserver.localdomain'],
 }
 
 include ::splunk::forwarder
+
+@splunkforwarder_input { 'messages':
+  section => 'monitor:///var/log/messages',
+  setting => 'sourcetype',
+  value   => 'puppetclient',
+  tag     => 'messages'
+}
 
