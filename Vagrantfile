@@ -1,9 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-SPLUNK_VERSION = "7.0.0"
-SPLUNK_BUILD = "c8a78efdd40f"
-
 Vagrant.configure("2") do |config|
 
   config.vm.define "server" do |server|
@@ -19,10 +16,11 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
     end
 
-    server.vm.provision "file", source: "splunk-#{SPLUNK_VERSION}-#{SPLUNK_BUILD}-linux-2.6-x86_64.rpm", destination: "/tmp/splunk/linux/splunk-#{SPLUNK_VERSION}-#{SPLUNK_BUILD}-linux-2.6-x86_64.rpm"
-    server.vm.provision "file", source: "splunk-server.pp", destination: "/tmp/splunk-server.pp"
-    server.vm.provision "shell", inline: "puppet module install puppet-splunk" 
-    server.vm.provision "shell", inline: "puppet apply /tmp/splunk-server.pp"
+    server.vm.provision "shell", inline: "puppet module install puppet-splunk"
+    server.vm.provision "puppet" do |puppet|
+      puppet.hiera_config_path = "hiera.yaml"
+      puppet.manifest_file = "server.pp"
+    end
     server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=8000/tcp"
     server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=9997/tcp"
   end
@@ -31,10 +29,10 @@ Vagrant.configure("2") do |config|
     client.vm.box = "puppetlabs/centos-7.0-64-puppet"
     client.vm.hostname = "splunkclient.local"
     client.vm.network :private_network, ip: "10.0.0.11"
-    client.vm.provision "file", source: "splunkforwarder-#{SPLUNK_VERSION}-#{SPLUNK_BUILD}-linux-2.6-x86_64.rpm", destination: "/tmp/universalforwarder/linux/splunkforwarder-#{SPLUNK_VERSION}-#{SPLUNK_BUILD}-linux-2.6-x86_64.rpm"
-    client.vm.provision "file", source: "splunk-client.pp", destination: "/tmp/splunk-client.pp"
-    client.vm.provision "shell", inline: "mkdir -p /etc/puppetlabs/code/environments/client"
     client.vm.provision "shell", inline: "puppet module install puppet-splunk"
-    client.vm.provision "shell", inline: "puppet apply /tmp/splunk-client.pp"
+    client.vm.provision "puppet" do |puppet|
+      puppet.hiera_config_path = "hiera.yaml"
+      puppet.manifest_file = "client.pp"
+    end
   end
 end
