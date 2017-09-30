@@ -7,12 +7,5 @@ host { 'splunkclient.localdomain':
   target       => '/etc/hosts',
 }
 
-class { '::splunk::params':
-  version  => '7.0.0',
-  build    => 'c8a78efdd40f',
-  src_root => '/vagrant',
-  require  => Host['splunkclient.localdomain'],
-}
-
 include ::splunk
 

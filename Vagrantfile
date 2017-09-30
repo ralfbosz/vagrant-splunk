@@ -18,6 +18,7 @@ Vagrant.configure("2") do |config|
 
     server.vm.provision "shell", inline: "puppet module install puppet-splunk"
     server.vm.provision "puppet" do |puppet|
+      puppet.hiera_config_path = "hiera.yaml"
       puppet.manifest_file = "server.pp"
     end
     server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=8000/tcp"
@@ -30,6 +31,7 @@ Vagrant.configure("2") do |config|
     client.vm.network :private_network, ip: "10.0.0.11"
     client.vm.provision "shell", inline: "puppet module install puppet-splunk"
     client.vm.provision "puppet" do |puppet|
+      puppet.hiera_config_path = "hiera.yaml"
       puppet.manifest_file = "client.pp"
     end
   end

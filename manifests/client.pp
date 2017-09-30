@@ -7,20 +7,12 @@ host { 'splunkserver.localdomain':
   target       => '/etc/hosts',
 }
 
-class { '::splunk::params':
-  server   => 'splunkserver.localdomain',
-  version  => '7.0.0',
-  build    => 'c8a78efdd40f',
-  src_root => '/vagrant',
-  require  => Host['splunkserver.localdomain'],
-}
-
 include ::splunk::forwarder
 
 @splunkforwarder_input { 'messages':
   section => 'monitor:///var/log/messages',
   setting => 'sourcetype',
   value   => 'puppetclient',
-  tag     => 'messages'
+  tag     => 'messages',
 }
 
