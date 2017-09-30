@@ -11,7 +11,7 @@ class { '::splunk::params':
   server   => 'splunkserver.localdomain',
   version  => '7.0.0',
   build    => 'c8a78efdd40f',
-  src_root => '/tmp',
+  src_root => '/vagrant',
   require  => Host['splunkserver.localdomain'],
 }
 
