@@ -1,13 +1,28 @@
 # vagrant-splunk
 
-This Vagrantfile is created to setup a Splunk server using Puppet.
-With "puppet-splunk" the Splunk server is installed, just add the
-RPM to the root of this directory and run vagrant up.
+Welcome to my vagrant-splunk implementation.
 
-Next step is a client which connects to this server, but that is
-for another commit.
+## Requirements
 
-Feel free to help me enchance this, my knowledge of Vagrant is
-very newby, just wanted to create a fast way to make a Splunk
-server for fun and couldn't find any Vagrant examples which
-are still active supported...
+Download the Splunk Software from splunk.com:
+
+wget -qO splunk/linux/splunk-7.0.0-c8a78efdd40f-Linux-x86_64.tgz
+https://download.splunk.com/products/splunk/releases/7.0.0/linux/splunk-7.0.0-c8a78efdd40f-Linux-x86_64.tgz
+
+wget -qO universalforwarder/linux/splunk-7.0.0-c8a78efdd40f-Linux-x86_64.tgz
+https://download.splunk.com/products/universalforwarder/releases/7.0.0/linux/universalforwarder-7.0.0-c8a78efdd40f-Linux-x86_64.tgz
+
+## Getting started
+
+Just start the boxes up:
+
+``vagrant up``
+
+## Whishes/ToDo
+
+- Make the modules available locally, so the server and client don't need to download it seperatly  
+- Download the Splunk software automatically  
+
+## Fork/Push/Pull
+
+Feel free to fork this repo and make changes as PR available.
