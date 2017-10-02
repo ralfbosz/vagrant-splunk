@@ -18,7 +18,7 @@ Just start the boxes up:
 
 ``vagrant up``
 
-## Whishes/ToDo
+## Wishes/ToDo
 
 - Make the modules available locally, so the server and client don't need to download it seperatly  
 - Download the Splunk software automatically  
