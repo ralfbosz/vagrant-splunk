@@ -15,7 +15,6 @@ Just start the boxes up:
 ## Wishes/ToDo
 
 - Make the modules available locally, so the server and client don't need to download it seperatly  
-- Download the Splunk software automatically  
 
 ## Fork/Push/Pull
 
