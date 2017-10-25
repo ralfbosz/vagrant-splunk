@@ -1,4 +1,3 @@
 splunk::params::server: 'splunkserver.localdomain'
 splunk::params::version: '7.0.0'
 splunk::params::build: 'c8a78efdd40f'
-splunk::params::src_root: '/vagrant'
