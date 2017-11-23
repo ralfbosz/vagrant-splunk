@@ -21,8 +21,9 @@ Vagrant.configure("2") do |config|
       puppet.hiera_config_path = "hiera.yaml"
       puppet.manifest_file = "server.pp"
     end
-    server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=8000/tcp"
-    server.vm.provision "shell", inline: "firewall-cmd --zone=public --add-port=9997/tcp"
+    server.vm.provision "shell", inline: "firewall-cmd --permanent --zone=public --add-port=8000/tcp"
+    server.vm.provision "shell", inline: "firewall-cmd --permanent --zone=public --add-port=9997/tcp"
+    server.vm.provision "shell", inline: "firewall-cmd --reload"
   end
 
   config.vm.define "client" do |client|
