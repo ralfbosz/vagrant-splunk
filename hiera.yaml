@@ -1,8 +1,9 @@
-:backends:
-  - yaml
+version: 5
 
-:hierarchy:
-  - "common"
+defaults:
+  datadir: '/vagrant/hiera'
+  data_hash: yaml_data
 
-:yaml:
-  :datadir: '/vagrant/hiera'
+hierarchy:
+  - name: "common"
+    path: "common.yaml"
